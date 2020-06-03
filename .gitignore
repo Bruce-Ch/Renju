@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# On macbook
+.idea/
+
+# Cmake
+cmake-build-debug/
