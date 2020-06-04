@@ -33,6 +33,8 @@
 
 # On macbook
 .idea/
+.DS_Store
 
 # Cmake
 cmake-build-debug/
+
