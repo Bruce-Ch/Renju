@@ -6,8 +6,21 @@
 #define RENJU_RULES_H
 
 
-class Rules {
+#include "ChessBoard.h"
 
+class Rules {
+    ChessBoard* chessBoard_;
+public:
+    Rules(ChessBoard* chessBoard): chessBoard_(chessBoard){}
+    int cntThree(ChessMan* chessMan, int dir);
+    int cntThree(Pos pos, int color, int dir);
+    int cntFour(ChessMan* chessMan, int dir);
+    int cntFour(Pos pos, int color, int dir);
+    int checkFive(ChessMan* chessMan, int dir);
+    int checkFive(Pos pos, int color, int dir);
+    int checkLong(ChessMan* chessMan, int dir);
+    int checkLong(Pos pos, int color, int dir);
+    int finished();
 };
 
 

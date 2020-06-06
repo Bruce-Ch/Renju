@@ -6,8 +6,18 @@
 #define RENJU_PLAYER_H
 
 
-class Player {
+#include <vector>
+#include "ChessMan.h"
 
+class Player {
+    int color_;
+public:
+    Player(int color): color_(color){}
+    void updateGameInfo();
+    std::vector<int> response(const std::vector<int>& cmd);
+    std::vector<int> go(Pos pos);
+    std::vector<int> retract();
+    std::vector<int> surForPeace();
 };
 
 
