@@ -15,9 +15,9 @@ class ChessMan {
     Pos pos_; // 从0到14
 public:
     ChessMan(int color, int id, Pos pos):color_(color), id_(id), pos_(std::move(pos)){}
-    int getColor();
-    int getId();
-    Pos getPos();
+    inline int getColor();
+    inline int getId();
+    inline Pos getPos();
 };
 
 
