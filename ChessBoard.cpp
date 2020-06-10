@@ -18,7 +18,7 @@ ChessBoard::~ChessBoard() {
 
 void ChessBoard::checkOutOfRange(int row, int col) {
     if(row > 14 || row < 0 || col > 14 || col < 0){
-        throw out_of_range("Out of range in ChessBoard");
+        throw out_of_range("Out of range in ChessBoard: row = " + to_string(row) + " col = " + to_string(col));
     }
 }
 
@@ -42,6 +42,7 @@ ChessMan * ChessBoard::getChessManById(int id) {
 }
 
 ChessMan * ChessBoard::getChessManByPos(Pos pos) {
+    checkOutOfRange(pos);
     return chessManPtrMatrix[pos.first][pos.second];
 }
 
@@ -97,6 +98,7 @@ void ChessBoard::setChessMan(int color, int id, Pos pos) {
 }
 
 void ChessBoard::eraseChessMan(ChessMan *chessMan) {
+    if(!chessMan) { return; }
     int row, col;
     tie(row, col) = chessMan->getPos();
     assert(chessManPtrMatrix[row][col] == chessMan);
@@ -110,9 +112,10 @@ ostream& operator<<(ostream& out, const ChessBoard& chessBoard){
             if(chessManPtr){
                 out << (chessManPtr->getColor() ? 'X' : 'O') << ' ';
             } else {
-                out << '*';
+                out << "* ";
             }
         }
         out << endl;
     }
+    return out;
 }

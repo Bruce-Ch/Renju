@@ -8,7 +8,6 @@
 #include <ostream>
 #include <vector>
 #include "ChessMan.h"
-#include "Rules.h"
 
 class ChessBoard {
     std::vector<std::vector<ChessMan*>> chessManPtrMatrix;

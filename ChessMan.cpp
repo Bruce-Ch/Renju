@@ -4,14 +4,3 @@
 
 #include "ChessMan.h"
 
-int ChessMan::getId() {
-    return id_;
-}
-
-Pos ChessMan::getPos() {
-    return pos_;
-}
-
-int ChessMan::getColor() {
-    return color_;
-}
