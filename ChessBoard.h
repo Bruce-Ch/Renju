@@ -7,12 +7,23 @@
 
 #include <ostream>
 #include <vector>
+#include <tuple>
 #include "ChessMan.h"
 
 class ChessBoard {
     std::vector<std::vector<ChessMan*>> chessManPtrMatrix;
 public:
-    ChessBoard(): chessManPtrMatrix(15, std::vector<ChessMan*>(15)){}
+    ChessBoard(): chessManPtrMatrix(17, std::vector<ChessMan*>(17)){
+        for(int i = 0; i < 17; i++){
+            for(int j = 0; j < 17; j++){
+                if(i == 0 || i == 16 || j == 0 || j == 16){
+                    chessManPtrMatrix[i][j] = new ChessMan{3, -1, std::make_pair(i, j)};
+                } else {
+                    chessManPtrMatrix[i][j] = new ChessMan{2, -1, std::make_pair(i, j)};
+                }
+            }
+        }
+    }
     ~ChessBoard();
     bool posIsEmpty(Pos pos);
     ChessMan* getChessManByPos(Pos pos);
@@ -26,6 +37,8 @@ public:
 private:
     static void checkOutOfRange(int row, int col);
     static void checkOutOfRange(Pos pos);
+    static bool inRange(Pos pos);
+    static bool inRange(int row, int col);
 };
 
 

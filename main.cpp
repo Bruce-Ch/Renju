@@ -11,7 +11,7 @@ int main() {
     ChessBoard chessBoard;
     chessBoard.setChessMan(0, 1, make_pair(6, 7));
     cout << chessBoard << endl;
-    chessBoard.eraseChessMan(chessBoard.getChessManByPos(make_pair(18, 6)));
+    chessBoard.eraseChessMan(chessBoard.getChessManByPos(make_pair(6, 7)));
     cout << chessBoard << endl;
     return 0;
 }

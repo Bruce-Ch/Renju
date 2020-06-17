@@ -10,7 +10,7 @@
 typedef std::pair<int, int> Pos;
 
 class ChessMan {
-    int color_; // 0为白，1为黑
+    int color_; // 0为白，1为黑，2为空，3为墙
     int id_; // 从0开始
     Pos pos_; // 从0到14
 public:

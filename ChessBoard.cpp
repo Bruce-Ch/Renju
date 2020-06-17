@@ -17,7 +17,7 @@ ChessBoard::~ChessBoard() {
 }
 
 void ChessBoard::checkOutOfRange(int row, int col) {
-    if(row > 14 || row < 0 || col > 14 || col < 0){
+    if(row > 15 || row < 1 || col > 15 || col < 1){
         throw out_of_range("Out of range in ChessBoard: row = " + to_string(row) + " col = " + to_string(col));
     }
 }
@@ -26,8 +26,17 @@ void ChessBoard::checkOutOfRange(Pos pos) {
     checkOutOfRange(pos.first, pos.second);
 }
 
+bool ChessBoard::inRange(Pos pos) {
+    return inRange(pos.first, pos.second);
+}
+
+bool ChessBoard::inRange(int row, int col) {
+    return (row >= 1 && row <= 15 && col >= 1 && col <= 15);
+}
+
 bool ChessBoard::posIsEmpty(Pos pos) {
-    return !chessManPtrMatrix[pos.first][pos.second];
+    checkOutOfRange(pos);
+    return chessManPtrMatrix[pos.first][pos.second]->getColor() == 2;
 }
 
 ChessMan * ChessBoard::getChessManById(int id) {
@@ -84,8 +93,7 @@ ChessMan * ChessBoard::getChessManWithDir(Pos pos, int dir) {
         default:
             throw bad_direction("Input direction is " + to_string(dir));
     }
-    checkOutOfRange(row, col);
-    return chessManPtrMatrix[row][col];
+    return (inRange(row, col) ? chessManPtrMatrix[row][col] : nullptr);
 }
 
 ChessMan * ChessBoard::getChessManWithDir(ChessMan *chessMan, int dir) {
@@ -94,7 +102,9 @@ ChessMan * ChessBoard::getChessManWithDir(ChessMan *chessMan, int dir) {
 
 void ChessBoard::setChessMan(int color, int id, Pos pos) {
     checkOutOfRange(pos);
-    chessManPtrMatrix[pos.first][pos.second] = new ChessMan(color, id, pos);
+    auto* tmp = new ChessMan{color, id, pos};
+    delete chessManPtrMatrix[pos.first][pos.second];
+    chessManPtrMatrix[pos.first][pos.second] = tmp;
 }
 
 void ChessBoard::eraseChessMan(ChessMan *chessMan) {
@@ -102,16 +112,17 @@ void ChessBoard::eraseChessMan(ChessMan *chessMan) {
     int row, col;
     tie(row, col) = chessMan->getPos();
     assert(chessManPtrMatrix[row][col] == chessMan);
+    auto* tmp = new ChessMan{2, -1, make_pair(row, col)};
     delete chessManPtrMatrix[row][col];
-    chessManPtrMatrix[row][col] = nullptr;
+    chessManPtrMatrix[row][col] = tmp;
 }
 
 ostream& operator<<(ostream& out, const ChessBoard& chessBoard){
     for(const auto& chessManPtrRow: chessBoard.chessManPtrMatrix){
         for(auto chessManPtr: chessManPtrRow){
-            if(chessManPtr){
+            if(chessManPtr->getColor() <= 1){
                 out << (chessManPtr->getColor() ? 'X' : 'O') << ' ';
-            } else {
+            } else if(chessManPtr->getColor() == 2) {
                 out << "* ";
             }
         }

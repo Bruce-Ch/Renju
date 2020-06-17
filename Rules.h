@@ -24,8 +24,9 @@ public:
     int finished();
 
 private:
-    std::list<ChessMan> getLine(Pos pos, int dir, int window); // window表示不包括中心点在内的每侧长度
-    std::list<ChessMan> getLine(ChessMan* chessMan, int dir, int window);
+    static inline int getReverseDir(int dir) {
+        return (dir + 4) % 8;
+    }
 };
 
 
