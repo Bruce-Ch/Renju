@@ -13,4 +13,9 @@ public:
     using std::invalid_argument::invalid_argument;
 };
 
+class wrong_color: public std::invalid_argument{
+public:
+    using std::invalid_argument::invalid_argument;
+};
+
 #endif //RENJU_MYERRORS_H

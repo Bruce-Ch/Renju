@@ -14,7 +14,7 @@ class Rules {
 public:
     explicit Rules(ChessBoard* chessBoard): chessBoard_(chessBoard){}
     int cntThree(ChessMan* chessMan, int dir);
-    int cntThree(Pos pos, int color, int dir);
+    int cntThree(Pos pos, int color, int dir); // 无论pos位置上当前是何种棋子，将其改为color，再做判断
     int cntFour(ChessMan* chessMan, int dir);
     int cntFour(Pos pos, int color, int dir);
     bool checkFive(ChessMan* chessMan, int dir);
@@ -27,6 +27,9 @@ private:
     static inline int getReverseDir(int dir) {
         return (dir + 4) % 8;
     }
+
+public:
+    std::vector<int> getLine(ChessMan* chessMan, int dir, int window);
 };
 
 
