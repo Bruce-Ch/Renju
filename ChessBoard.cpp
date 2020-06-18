@@ -107,6 +107,10 @@ void ChessBoard::setChessMan(int color, int id, Pos pos) {
     chessManPtrMatrix[pos.first][pos.second] = tmp;
 }
 
+void ChessBoard::setChessMan(ChessMan *chessMan) {
+    setChessMan(chessMan->getColor(), chessMan->getId(), chessMan->getPos());
+}
+
 void ChessBoard::eraseChessMan(ChessMan *chessMan) {
     if(!chessMan) { return; }
     int row, col;

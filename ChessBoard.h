@@ -31,6 +31,7 @@ public:
     ChessMan* getChessManWithDir(Pos pos, int dir); // 以上为0，按顺时针计算
     ChessMan* getChessManWithDir(ChessMan* chessMan, int dir);
     void setChessMan(int color, int id, Pos pos);
+    void setChessMan(ChessMan* chessMan);
     void eraseChessMan(ChessMan* chessMan);
     friend std::ostream& operator<<(std::ostream& out, const ChessBoard& chessBoard);
 

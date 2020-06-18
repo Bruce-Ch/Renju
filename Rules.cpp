@@ -60,36 +60,98 @@ vector<int> Rules::getLine(ChessMan *chessMan, int dir, int window) {//同1异0�
 }
 
 int Rules::cntThree(ChessMan *chessMan, int dir) {
+    return 0;
+}
 
+int Rules::cntThree(Pos pos, int color, int dir) {
+    return 0;
+}
+
+int Rules::cntFour(ChessMan *chessMan, int dir) {
+    return 0;
+}
+
+int Rules::cntFour(Pos pos, int color, int dir) {
+    return 0;
+}
+
+bool Rules::checkFive(ChessMan *chessMan, int dir) {
+    assert(chessMan && chessMan->getColor() <= 1);
+    vector<int> line = getLine(chessMan, dir, 5);
     int cnt = 1;
-    ChessMan* chessManFront = chessMan;
-    ChessMan* chessManBack = chessMan;
-    int color = chessMan->getColor();
-    while (true){
-        chessManFront = chessBoard_->getChessManWithDir(chessManFront, getReverseDir(dir));
-        if(!chessManFront){ break; }
-        if(chessManFront->getColor() != chessMan->getColor()){ break; }
-        ++cnt;
+    for(int i = 4; i >= 0; i--){
+        if(line[i] == 1){
+            cnt++;
+        } else {
+            break;
+        }
     }
-    while (true){
-        chessManBack = chessBoard_->getChessManWithDir(chessManBack, dir);
-        if(!chessManBack){ break; }
-        if(chessManBack->getColor() != chessMan->getColor()){ break; }
-        ++cnt;
+    for(int i = 6; i < 10; i++){
+        if(line[i] == 1){
+            cnt++;
+        } else {
+            break;
+        }
     }
-    if(cnt > 3) { return 0; }
-    if(!chessManFront || !chessManBack || chessManBack->getColor() <= 1 || chessManFront->getColor() <= 1){ return 0; }
-    switch (cnt) {
-        case 3:
-            chessManFront = chessBoard_->getChessManWithDir(chessManFront, getReverseDir(dir));
-            chessManBack = chessBoard_->getChessManWithDir(chessManBack, dir);
-            if(!chessManFront && !chessManBack){
-                return 0;
-            } else if(!chessManFront){
+    return cnt == 5;
+}
 
-            }
-            bool haveFour = chessManFront->getColor() == chessMan->getColor() || chessManBack->getColor() == chessMan->getColor();
-
-
+bool Rules::checkLong(ChessMan *chessMan, int dir) {
+    assert(chessMan && chessMan->getColor() <= 1);
+    vector<int> line = getLine(chessMan, dir, 5);
+    int cnt = 1;
+    for(int i = 4; i >= 0; i--){
+        if(line[i]){
+            cnt++;
+        } else {
+            break;
+        }
     }
+    for(int i = 6; i < 10; i++){
+        if(line[i]){
+            cnt++;
+        } else {
+            break;
+        }
+    }
+    return cnt > 5;
+}
+
+bool Rules::checkFive(Pos pos, int color, int dir) {
+    ChessMan* chessManOld = chessBoard_->getChessManByPos(pos);
+    auto* chessManNew = new ChessMan(color, -1, pos);
+    chessBoard_->setChessMan(chessManNew);
+    bool ret = checkFive(chessManNew, dir);
+    chessBoard_->setChessMan(chessManOld);
+    return ret;
+}
+
+bool Rules::checkLong(Pos pos, int color, int dir) {
+    ChessMan* chessManOld = chessBoard_->getChessManByPos(pos);
+    auto* chessManNew = new ChessMan(color, -1, pos);
+    chessBoard_->setChessMan(chessManNew);
+    bool ret = checkLong(chessManNew, dir);
+    chessBoard_->setChessMan(chessManOld);
+    return ret;
+}
+
+int Rules::finished(ChessMan *chessMan) {
+    assert(chessMan && chessMan->getColor() <= 1);
+    bool res = false;
+    for(int i = 0; i < 4; i++){
+        if(checkFive(chessMan, i)){
+            res = true;
+        }
+    }
+    return (res ? chessMan->getColor() : 2);
+}
+
+int Rules::finished(Pos pos, int color) {
+    bool res = false;
+    for(int i = 0; i < 4; i++){
+        if(checkFive(pos, color, i)){
+            res = true;
+        }
+    }
+    return (res ? color : 2);
 }

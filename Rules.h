@@ -21,15 +21,14 @@ public:
     bool checkFive(Pos pos, int color, int dir);
     bool checkLong(ChessMan* chessMan, int dir);
     bool checkLong(Pos pos, int color, int dir);
-    int finished();
+    int finished(ChessMan* chessMan); // 0白1黑2未分
+    int finished(Pos pos, int color);
 
 private:
     static inline int getReverseDir(int dir) {
         return (dir + 4) % 8;
     }
-
-public:
-    std::vector<int> getLine(ChessMan* chessMan, int dir, int window);
+    std::vector<int> getLine(ChessMan* chessMan, int dir, int window); // 同1异0空2 一个异则都是异
 };
 
 

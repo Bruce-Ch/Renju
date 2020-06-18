@@ -18,4 +18,8 @@ public:
     using std::invalid_argument::invalid_argument;
 };
 
+class bad_pos: public std::invalid_argument{
+public:
+    using std::invalid_argument::invalid_argument;
+};
 #endif //RENJU_MYERRORS_H
