@@ -9,44 +9,43 @@
 
 #include "ChessMan.h"
 #include "ChessBoard.h"
+#include "Game.h"
+
+class Game;
 
 class Manipulation {
 protected:
-    ChessBoard* chessBoard_;
+    Game* game_;
 public:
-    explicit Manipulation(ChessBoard* chessBoard): chessBoard_(chessBoard){}
-    virtual void main();
-    virtual bool isValid();
-    virtual void act();
+    explicit Manipulation(Game* game): game_(game){}
+    virtual std::vector<int> main() = 0;
+    virtual ~Manipulation() = default;
 };
 
 
 class Go: public Manipulation{
     int color_;
     Pos pos_;
+    int id_;
 public:
-    Go(ChessBoard* chessBoard, int color, Pos pos): Manipulation(chessBoard), color_(color), pos_(std::move(pos)){}
-    void main() override ;
-    bool isValid() override ;
-    void act() override ;
+    Go(Game* game, int color, Pos pos, int id): Manipulation(game), color_(color), pos_(std::move(pos)), id_(id){}
+    std::vector<int> main() override ;
 };
 
 
 class Retract: public Manipulation{
+    int color_;
 public:
-    explicit Retract(ChessBoard* chessBoard): Manipulation(chessBoard){}
-    void main() override ;
-    bool isValid() override ;
-    void act() override ;
+    explicit Retract(Game* game, int color): Manipulation(game), color_(color){}
+    std::vector<int> main() override ;
 };
 
 
 class SueForPeace: public Manipulation{
+    int color_;
 public:
-    explicit SueForPeace(ChessBoard* chessBoard): Manipulation(chessBoard){}
-    void main() override ;
-    bool isValid() override ;
-    void act() override ;
+    explicit SueForPeace(Game* game, int color): Manipulation(game), color_(color){}
+    std::vector<int> main() override ;
 };
 
 

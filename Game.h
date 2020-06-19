@@ -11,14 +11,17 @@
 #include <string>
 #include <ostream>
 #include "ChessBoard.h"
+#include "Manipulation.h"
 
 class Game {
     ChessBoard* chessBoard_ = nullptr;
     std::stack<std::tuple<int, int, int>> stack_;
 public:
     Game();
+    ~Game();
     std::vector<int> manipulate(const std::vector<int>& info);
-    friend std::ostream& operator<<(std::ostream& out, Game game);
+    friend std::ostream& operator<<(std::ostream& out, const Game& game);
+    friend class Manipulation;
 };
 
 

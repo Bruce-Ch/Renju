@@ -12,9 +12,9 @@
 class Player {
     int color_;
 public:
-    Player(int color): color_(color){}
+    explicit Player(int color): color_(color){}
     void updateGameInfo();
-    std::vector<int> response(const std::vector<int>& cmd);
+    std::vector<int> respond(const std::vector<int>& cmd);
     std::vector<int> go(Pos pos);
     std::vector<int> retract();
     std::vector<int> surForPeace();

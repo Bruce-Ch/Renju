@@ -3,3 +3,42 @@
 //
 
 #include "Game.h"
+
+using namespace std;
+
+Game::Game() {
+    chessBoard_ = new ChessBoard;
+}
+
+Game::~Game() {
+    delete chessBoard_;
+}
+
+std::vector<int> Game::manipulate(const std::vector<int> &info) {
+    /*
+     * 1: 落子，由1方发来信息，位置在(2, 3)处
+     * 2: 悔棋，由1方发来信息
+     * 3: 求和，由1方发来信息
+     */
+    vector<int> res;
+    Manipulation* manipulation;
+    switch (info[0]) {
+        case 1:
+            manipulation = new Go {this, info[1], make_pair(info[2], info[3]), static_cast<int>(stack_.size())};
+            break;
+        case 2:
+            manipulation = new Retract {this, info[1]};
+            break;
+        case 3:
+            manipulation = new SueForPeace {this, info[1]};
+            break;
+    }
+    res = manipulation->main();
+    delete manipulation;
+    return res;
+}
+
+std::ostream& operator<<(std::ostream& out, const Game& game){
+    out << game.chessBoard_;
+    return out;
+}
