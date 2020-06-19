@@ -30,8 +30,8 @@ public:
     ChessMan* getChessManById(int id);
     ChessMan* getChessManWithDir(Pos pos, int dir); // 以上为0，按顺时针计算
     ChessMan* getChessManWithDir(ChessMan* chessMan, int dir);
-    void setChessMan(int color, int id, Pos pos);
-    void setChessMan(ChessMan* chessMan);
+    ChessMan* setChessMan(int color, int id, Pos pos);
+    ChessMan* setChessMan(ChessMan* chessMan); // 以参数为样板设置，并非将参数直接设置
     void eraseChessMan(ChessMan* chessMan);
     friend std::ostream& operator<<(std::ostream& out, const ChessBoard& chessBoard);
 

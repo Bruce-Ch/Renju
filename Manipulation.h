@@ -6,45 +6,47 @@
 #define RENJU_MANIPULATION_H
 
 #include <utility>
+#include <stack>
 
 #include "ChessMan.h"
 #include "ChessBoard.h"
-#include "Game.h"
-
-class Game;
+#include "Rules.h"
 
 class Manipulation {
 protected:
-    Game* game_;
+    ChessBoard* chessBoard_;
+    std::stack<std::tuple<int, int, int>> stack_;
+    int color_;
 public:
-    explicit Manipulation(Game* game): game_(game){}
+    explicit Manipulation(ChessBoard* chessBoard, std::stack<std::tuple<int, int, int>>& stack, int color):
+        chessBoard_(chessBoard), stack_(stack), color_(color){}
     virtual std::vector<int> main() = 0;
     virtual ~Manipulation() = default;
 };
 
 
 class Go: public Manipulation{
-    int color_;
     Pos pos_;
     int id_;
 public:
-    Go(Game* game, int color, Pos pos, int id): Manipulation(game), color_(color), pos_(std::move(pos)), id_(id){}
+    Go(ChessBoard* chessBoard, std::stack<std::tuple<int, int, int>>& stack, int color, Pos pos, int id):
+        Manipulation(chessBoard, stack, color), pos_(std::move(pos)), id_(id){}
     std::vector<int> main() override ;
 };
 
 
 class Retract: public Manipulation{
-    int color_;
 public:
-    explicit Retract(Game* game, int color): Manipulation(game), color_(color){}
+    explicit Retract(ChessBoard* chessBoard, std::stack<std::tuple<int, int, int>>& stack, int color):
+        Manipulation(chessBoard, stack, color){}
     std::vector<int> main() override ;
 };
 
 
 class SueForPeace: public Manipulation{
-    int color_;
 public:
-    explicit SueForPeace(Game* game, int color): Manipulation(game), color_(color){}
+    explicit SueForPeace(ChessBoard* chessBoard, std::stack<std::tuple<int, int, int>>& stack, int color):
+        Manipulation(chessBoard, stack, color){}
     std::vector<int> main() override ;
 };
 

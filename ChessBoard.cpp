@@ -100,15 +100,16 @@ ChessMan * ChessBoard::getChessManWithDir(ChessMan *chessMan, int dir) {
     return getChessManWithDir(chessMan->getPos(), dir);
 }
 
-void ChessBoard::setChessMan(int color, int id, Pos pos) {
+ChessMan* ChessBoard::setChessMan(int color, int id, Pos pos) {
     checkOutOfRange(pos);
     auto* tmp = new ChessMan{color, id, pos};
     delete chessManPtrMatrix[pos.first][pos.second];
     chessManPtrMatrix[pos.first][pos.second] = tmp;
+    return tmp;
 }
 
-void ChessBoard::setChessMan(ChessMan *chessMan) {
-    setChessMan(chessMan->getColor(), chessMan->getId(), chessMan->getPos());
+ChessMan* ChessBoard::setChessMan(ChessMan *chessMan) {
+    return setChessMan(chessMan->getColor(), chessMan->getId(), chessMan->getPos());
 }
 
 void ChessBoard::eraseChessMan(ChessMan *chessMan) {

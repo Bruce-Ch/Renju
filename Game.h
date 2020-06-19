@@ -13,15 +13,15 @@
 #include "ChessBoard.h"
 #include "Manipulation.h"
 
+
 class Game {
     ChessBoard* chessBoard_ = nullptr;
-    std::stack<std::tuple<int, int, int>> stack_;
+    std::stack<std::tuple<int, int, int>> stack_; // 颜色，位置，位置
 public:
     Game();
     ~Game();
     std::vector<int> manipulate(const std::vector<int>& info);
     friend std::ostream& operator<<(std::ostream& out, const Game& game);
-    friend class Manipulation;
 };
 
 

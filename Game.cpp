@@ -24,13 +24,13 @@ std::vector<int> Game::manipulate(const std::vector<int> &info) {
     Manipulation* manipulation;
     switch (info[0]) {
         case 1:
-            manipulation = new Go {this, info[1], make_pair(info[2], info[3]), static_cast<int>(stack_.size())};
+            manipulation = new Go {chessBoard_, stack_, info[1], make_pair(info[2], info[3]), static_cast<int>(stack_.size())};
             break;
         case 2:
-            manipulation = new Retract {this, info[1]};
+            manipulation = new Retract {chessBoard_, stack_, info[1]};
             break;
         case 3:
-            manipulation = new SueForPeace {this, info[1]};
+            manipulation = new SueForPeace {chessBoard_, stack_, info[1]};
             break;
     }
     res = manipulation->main();
