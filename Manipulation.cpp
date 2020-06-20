@@ -5,8 +5,13 @@
 #include "Manipulation.h"
 using namespace std;
 
+/*
+ * 最优先返回命令码
+ */
+
 std::vector<int> Go::main() {
     vector<int> res;
+    res.push_back(1);
     /*
      * 成功返回0，
      *      导致游戏结束则后附0，后附游戏胜利者（0白1黑）
@@ -16,7 +21,7 @@ std::vector<int> Go::main() {
     if(chessBoard_->posIsEmpty(pos_)){
         res.push_back(0);
         ChessMan* chessMan = chessBoard_->setChessMan(color_, id_, pos_);
-        stack_.push(make_tuple(color_, pos_.first, pos_.second));
+        stack_->push(make_tuple(color_, pos_.first, pos_.second));
         Rules rules{chessBoard_};
         int finished = rules.finished(chessMan);
         if(finished != 2){
@@ -36,20 +41,21 @@ std::vector<int> Go::main() {
 
 std::vector<int> Retract::main() {
     vector<int> res;
+    res.push_back(2);
     /*
      * 成功返回0
      * 不成功返回1
      */
-    tuple<int, int, int> info;
+    tuple<int, int, int> info = stack_->top();
     if(get<0>(info) == color_){
-        info = stack_.top();
+        info = stack_->top();
         chessBoard_->eraseChessMan(chessBoard_->getChessManByPos(make_pair(get<1>(info), get<2>(info))));
-        stack_.pop();
+        stack_->pop();
     } else {
         for(int i = 0; i < 2; i++){
-            info = stack_.top();
+            info = stack_->top();
             chessBoard_->eraseChessMan(chessBoard_->getChessManByPos(make_pair(get<1>(info), get<2>(info))));
-            stack_.pop();
+            stack_->pop();
         }
     }
     res.push_back(0);
@@ -58,6 +64,7 @@ std::vector<int> Retract::main() {
 
 std::vector<int> SueForPeace::main() {
     vector<int> res;
+    res.push_back(3);
     /*
      * 成功返回0
      * 不成功返回1

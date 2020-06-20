@@ -16,7 +16,7 @@
 
 class Game {
     ChessBoard* chessBoard_ = nullptr;
-    std::stack<std::tuple<int, int, int>> stack_; // 颜色，位置，位置
+    std::stack<std::tuple<int, int, int>>* stack_ = nullptr; // 颜色，位置，位置
 public:
     Game();
     ~Game();

@@ -8,10 +8,12 @@ using namespace std;
 
 Game::Game() {
     chessBoard_ = new ChessBoard;
+    stack_ = new stack<tuple<int, int, int>>;
 }
 
 Game::~Game() {
     delete chessBoard_;
+    delete stack_;
 }
 
 std::vector<int> Game::manipulate(const std::vector<int> &info) {
@@ -24,7 +26,7 @@ std::vector<int> Game::manipulate(const std::vector<int> &info) {
     Manipulation* manipulation;
     switch (info[0]) {
         case 1:
-            manipulation = new Go {chessBoard_, stack_, info[1], make_pair(info[2], info[3]), static_cast<int>(stack_.size())};
+            manipulation = new Go {chessBoard_, stack_, info[1], make_pair(info[2], info[3]), static_cast<int>(stack_->size())};
             break;
         case 2:
             manipulation = new Retract {chessBoard_, stack_, info[1]};
@@ -39,6 +41,6 @@ std::vector<int> Game::manipulate(const std::vector<int> &info) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Game& game){
-    out << game.chessBoard_;
+    out << *game.chessBoard_;
     return out;
 }
