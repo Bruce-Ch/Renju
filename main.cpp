@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <tuple>
 #include <string>
+#include <sstream>
 #include "ChessMan.h"
 #include "ChessBoard.h"
 #include "Rules.h"
@@ -28,7 +29,7 @@ void chessBoardInitialize(ChessBoard& chessBoard){
         }
     }
 }
-
+/*
 int main() {
     Game game;
     cout << game << endl;
@@ -85,6 +86,22 @@ int main() {
     }
     return 0;
 }
+ */
+int main(){
+    ChessBoard chessBoard;
+    chessBoardInitialize(chessBoard);
+    stringstream ss;
+    ss << chessBoard;
+    char tmp;
+    for(int i = 0; i < 15; i ++){
+        for(int j = 0; j < 15; j ++){
+            ss >> tmp;
+            cout << tmp << ' ';
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
 
 /*
 * * * * * * * * * * * * * * *
@@ -115,5 +132,7 @@ int main() {
  1 0 9 11
  1 1 8 13
  1 0 1 1
+ 1 1 8 12
+ 2 1
  1 1 8 12
  */
